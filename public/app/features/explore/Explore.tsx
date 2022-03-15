@@ -34,6 +34,7 @@ import appEvents from 'app/core/app_events';
 import { AbsoluteTimeEvent } from 'app/types/events';
 import { Unsubscribable } from 'rxjs';
 import { getNodeGraphDataFrames } from 'app/plugins/panel/nodeGraph/utils';
+import { ExploreProfile } from './ExploreProfile';
 
 const getStyles = (theme: GrafanaTheme2) => {
   return {
@@ -313,6 +314,11 @@ export class Explore extends React.PureComponent<Props, ExploreState> {
     );
   }
 
+  renderProfilePanel(width: number) {
+    const { queryResponse } = this.props;
+    return <ExploreProfile width={width} data={queryResponse} />;
+  }
+
   render() {
     const {
       datasourceInstance,
@@ -328,12 +334,15 @@ export class Explore extends React.PureComponent<Props, ExploreState> {
       showTrace,
       showNodeGraph,
       timeZone,
+      showProfile,
     } = this.props;
     const { openDrawer } = this.state;
     const styles = getStyles(theme);
     const showPanels = queryResponse && queryResponse.state !== LoadingState.NotStarted;
     const showRichHistory = openDrawer === ExploreDrawer.RichHistory;
     const showQueryInspector = openDrawer === ExploreDrawer.QueryInspector;
+
+    console.log(' EXPLORE this.props', this.props);
 
     return (
       <CustomScrollbar
@@ -382,6 +391,7 @@ export class Explore extends React.PureComponent<Props, ExploreState> {
                           {showLogs && <ErrorBoundaryAlert>{this.renderLogsPanel(width)}</ErrorBoundaryAlert>}
                           {showNodeGraph && <ErrorBoundaryAlert>{this.renderNodeGraphPanel()}</ErrorBoundaryAlert>}
                           {showTrace && <ErrorBoundaryAlert>{this.renderTraceViewPanel()}</ErrorBoundaryAlert>}
+                          {showProfile && <ErrorBoundaryAlert>{this.renderProfilePanel(width)}</ErrorBoundaryAlert>}
                         </>
                       )}
                       {showRichHistory && (
@@ -433,6 +443,7 @@ function mapStateToProps(state: StoreState, { exploreId }: ExploreProps) {
     showNodeGraph,
     loading,
     graphStyle,
+    showProfile,
   } = item;
 
   return {
@@ -454,6 +465,7 @@ function mapStateToProps(state: StoreState, { exploreId }: ExploreProps) {
     showNodeGraph,
     loading,
     graphStyle,
+    showProfile,
   };
 }
 
