@@ -69,8 +69,6 @@ import * as nodeGraph from 'app/plugins/panel/nodeGraph/module';
 import * as histogramPanel from 'app/plugins/panel/histogram/module';
 import * as alertGroupsPanel from 'app/plugins/panel/alertGroups/module';
 import * as flameGraph from 'app/plugins/panel/flameGraph/module';
-// import * as pyroscopeDataSource from 'app/plugins/datasource/pyroscope/module';
-
 // Async loaded panels
 const geomapPanel = async () => await import(/* webpackChunkName: "geomapPanel" */ 'app/plugins/panel/geomap/module');
 const canvasPanel = async () => await import(/* webpackChunkName: "canvasPanel" */ 'app/plugins/panel/canvas/module');
